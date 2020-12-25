@@ -20,6 +20,7 @@ void processFsmWithDebugger(char input_file[], int fsm_states[], int fsm[50][52]
   int row_num;
   int col_num;
   char debugger_input;
+  int scan_status = 0;
   
   // Open FSM inputs file for reading.
   infile = fopen(input_file, "r");
@@ -29,13 +30,16 @@ void processFsmWithDebugger(char input_file[], int fsm_states[], int fsm[50][52]
       printf("processing FSM inputs file %s\n", input_file);
       
       // Process at most 250 inputs.
-      while (fscanf(infile, "%c\n", &input) != EOF && num_inputs < LIMIT)
+      while (scan_status != EOF && num_inputs < LIMIT)
 	{
 	  printf("FSM debugger> ");
 	  scanf("%c\n", &debugger_input);
 	  
 	  if (debugger_input == 'n')
 	    {
+	      
+	      scan_status = fscanf(infile, "%c\n", &input);
+	      
 	      // Calculate the row number of the current state.
 	      row_num = -1;
 	      for (int i = 0; i < 50; i++) 
@@ -90,10 +94,11 @@ void processFsmWithDebugger(char input_file[], int fsm_states[], int fsm[50][52]
 	    {
 	      printf("The FSM is currently in state %d\n", cur_state); 
 	    }
+	  
 	  else
 	    {
 	      printf("Error: Invalid input to debugger!\n");
-	      // another line of explanation
+	      printf("Type n to process the next FSM input or p to print the current state of the FSM\n");
 	    }
 	}
       
