@@ -51,6 +51,7 @@ void processFsm(char input_file[], int fsm_states[], int fsm[50][52])
 		{
 		  printf("Error: State %d does not exist in the FSM!\n", cur_state);
 		}
+	      break;
 	    }
 
 	  // Calculate the column number of the current input.
