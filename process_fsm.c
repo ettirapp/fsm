@@ -48,7 +48,21 @@ void processFsm(char input_file[], int fsm_states[], int fsm[50][52])
 		  printf("Error: State %d does not exist in the FSM!\n", cur_state);
 		}
 	    }
-	  col_num = input - 97;
+	  
+	  // EXTRA CREDIT: My code also works with uppercase inputs.
+	  if (input >= 'a' && input <= 'z')
+            {
+	      col_num = input - 97;
+            }
+	  else if (input >= 'A' && input <= 'Z') 
+            {
+	      col_num = input - 65 + 26;
+            }
+	  else
+            {
+	      printf("Error: Invalid input! Inputs must be alphabetic characters.\n");
+	      break;
+            }
 	  
 	  next_state = fsm[row_num][col_num];
 	  printf("\tat step %d, input %c transitions FSM from state %d to state %d\n", num_inputs, input, cur_state, next_state);
