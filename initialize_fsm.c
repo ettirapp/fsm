@@ -71,7 +71,7 @@ int initializeFsm(char input_file[], int fsm_states[], int fsm[50][52])
 		}
 	      else
 		{
-		  printf("Error: Too many states in the FSM!");
+		  printf("Error: Too many states in the FSM!\n");
 		}
             }
 	  
