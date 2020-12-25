@@ -2,6 +2,7 @@
 #include <string.h>
 #include "initialize_fsm.h"
 #include "process_fsm.h"
+#include "process_fsm_with_debugger.h"
 
 int main(int argc, char* argv[])
 {  
