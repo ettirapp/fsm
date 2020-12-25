@@ -45,7 +45,7 @@ int initializeFsm(char input_file[], int fsm_states[], int fsm[50][52])
             }
 	  
 	  // Find the row number in the fsm matrix corresponding to the
-	  // current state. fsm_states is a reverse lookup: if
+	  // current state. fsm_states has a reverse lookup scheme: if
 	  // fsm_states[i] = j, then state name j corresponds to the i'th
 	  // row of the fsm matrix.
 	  row_num = -1;
