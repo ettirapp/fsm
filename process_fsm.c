@@ -6,7 +6,7 @@ void processFsm(char input_file[], int fsm_states[], int fsm[50][26])
     infile = fopen(input_file, "r");
     char input;
     int step = 0;
-    int cur_state = 0;
+    int cur_state = 0; // initial state defaults to state 0
     int next_state;
     int row_num;
     int col_num;
@@ -31,7 +31,7 @@ void processFsm(char input_file[], int fsm_states[], int fsm[50][26])
         col_num = input - 97;
         
         next_state = fsm[row_num][col_num];
-        printf("at step %d, input %c transitions FSM from state %d to state %d\n", step, input, cur_state, next_state);
+        printf("\tat step %d, input %c transitions FSM from state %d to state %d\n", step, input, cur_state, next_state);
         
         cur_state = next_state;
         step++;
