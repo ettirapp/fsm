@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "initialize_fsm.h"
 #include "process_fsm.h"
-#include "process_fsm_with_debugger.h"
 
 int main(int argc, char* argv[])
 {  
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
       int num_states = initializeFsm(argv[2], fsm_states, fsm);
 
       // Read input file, process transitions with debugger.
-      processFsmWithDebugger(argv[3], fsm_states, fsm);
+      processFsm(argv[3], fsm_states, fsm, true);
     }
   
   else
@@ -44,6 +44,6 @@ int main(int argc, char* argv[])
       int num_states = initializeFsm(argv[1], fsm_states, fsm);
       
       // Read input file, process transitions.
-      processFsm(argv[2], fsm_states, fsm);
+      processFsm(argv[2], fsm_states, fsm, false);
     }
 }
