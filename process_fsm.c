@@ -4,7 +4,7 @@
 /******************************************************************************
 
 This function processes the FSM input file and outputs a description of the
-simulation it is performing.
+simulation it is performing. The function processes at most 250 inputs.
 
 *******************************************************************************/
 
