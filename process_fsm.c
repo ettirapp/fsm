@@ -1,40 +1,67 @@
 #include <stdio.h>
+#define LIMIT 250
+
+/******************************************************************************
+
+This function processes the FSM input file and outputs a description of the
+simulation it is performing.
+
+*******************************************************************************/
 
 void processFsm(char input_file[], int fsm_states[], int fsm[50][52])
 {
-    FILE *infile;
-    infile = fopen(input_file, "r");
-    char input;
-    int step = 0;
-    int cur_state = 0; // initial state defaults to state 0
-    int next_state;
-    int row_num;
-    int col_num;
-    
-    printf("processing FSM inputs file %s\n", input_file);
-    
-    while (fscanf(infile, "%c\n", &input) != EOF) // don't read more than a limit?
+  FILE *infile;
+  char input;
+  int num_inputs = 0;
+  // initial state defaults to state 0
+  int cur_state = 0;
+  int next_state;
+  int row_num;
+  int col_num;
+  
+  // Open FSM inputs file for reading.
+  infile = fopen(input_file, "r");
+  
+  if (infile != NULL) 
     {
-        row_num = -1;
-        for (int i = 0; i < 50; i++) 
-        {
-            if (fsm_states[i] == cur_state)
-            {
-                row_num = i;
-                break;
-            }
-        }
-        if (row_num == -1) 
-        {
-            printf("Error: current state does not exist in the FSM!\n");
-        }
-        col_num = input - 97;
-        
-        next_state = fsm[row_num][col_num];
-        printf("\tat step %d, input %c transitions FSM from state %d to state %d\n", step, input, cur_state, next_state);
-        
-        cur_state = next_state;
-        step++;
+      printf("processing FSM inputs file %s\n", input_file);
+      
+      while (fscanf(infile, "%c\n", &input) != EOF && num_inputs < LIMIT)
+	{
+	  row_num = -1;
+	  for (int i = 0; i < 50; i++) 
+	    {
+	      if (fsm_states[i] == cur_state)
+		{
+		  row_num = i;
+		  break;
+		}
+	    }
+	  if (row_num == -1) 
+	    {
+	      if (cur_state == 0)
+		{
+		  printf("Error: FSM must contain a state 0!");
+		}
+	      else 
+		{
+		  printf("Error: State %d does not exist in the FSM!\n", cur_state);
+		}
+	    }
+	  col_num = input - 97;
+	  
+	  next_state = fsm[row_num][col_num];
+	  printf("\tat step %d, input %c transitions FSM from state %d to state %d\n", num_inputs, input, cur_state, next_state);
+	  
+	  cur_state = next_state;
+	  num_inputs++;
+	}
+      printf("after %d steps, state machine finished successfully at state %d\n", num_inputs, cur_state);
     }
-    printf("after %d steps, state machine finished successfully at state %d\n", step, cur_state);
+  
+  // If the FSM inputs file could not be opened to read, throw an error.
+  else 
+    {
+      printf("Error: The FSM inputs file could not be opened to read.\n");
+    }
 }
