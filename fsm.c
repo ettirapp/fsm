@@ -23,27 +23,27 @@ int main(int argc, char* argv[])
     {
       if (argc != 4)
 	{
-	  printf("Error: Incorrect number of command line arguments!");
+	  printf("Error: Incorrect number of command line arguments!\n");
 	}
       
       // Read fsm definition file, fill fsm matrix.
       int num_states = initializeFsm(argv[2], fsm_states, fsm);
 
       // Read input file, process transitions with debugger.
-      processFsm(argv[3], fsm_states, fsm, true);
+      processFsm(argv[3], num_states, fsm_states, fsm, true);
     }
   
   else
     {
       if (argc != 3)
 	{
-	  printf("Error: Incorrect number of command line arguments!");
+	  printf("Error: Incorrect number of command line arguments!\n");
 	}
       
       // Read fsm definition file, fill fsm matrix.
       int num_states = initializeFsm(argv[1], fsm_states, fsm);
       
       // Read input file, process transitions.
-      processFsm(argv[2], fsm_states, fsm, false);
+      processFsm(argv[2], num_states, fsm_states, fsm, false);
     }
 }

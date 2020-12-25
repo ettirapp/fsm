@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include "print_fsm.h"
 #define LIMIT 250
 
 /******************************************************************************
@@ -10,7 +11,7 @@ simulation it is performing. The function processes at most 250 inputs.
 
 *******************************************************************************/
 
-void processFsm(char input_file[], int fsm_states[], int fsm[50][52], bool debugging)
+void processFsm(char input_file[], int num_states, int fsm_states[], int fsm[50][52], bool debugging)
 {
   FILE *infile;
   char input;
@@ -96,7 +97,8 @@ void processFsm(char input_file[], int fsm_states[], int fsm[50][52], bool debug
 	  
 	  else if (debugger_input == 'p')
 	    {
-	      printf("The FSM is currently in state %d\n", cur_state); 
+	      printf("The FSM is currently in state %d\n", cur_state);
+	      printFsm(num_states, fsm_states, fsm);
 	    }
 	  
 	  else
