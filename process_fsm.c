@@ -37,8 +37,8 @@ void processFsm(char input_file[], int fsm_states[], int fsm[50][52], bool debug
 	{
 	  if (debugging)
 	    {
-	  printf("FSM debugger> ");
-	  scanf(" %c", &debugger_input);
+	      printf("FSM debugger> ");
+	      scanf(" %c", &debugger_input);
 	    }
 	  
 	  if ((! debugging) || (debugger_input == 'n'))
@@ -101,8 +101,7 @@ void processFsm(char input_file[], int fsm_states[], int fsm[50][52], bool debug
 	  
 	  else
 	    {
-	      printf("Error: Invalid input to debugger!\n");
-	      printf("Type n to process the next FSM input or p to print the current state of the FSM\n");
+	      printf("Error: Invalid input to debugger! Type n to process the next FSM input or p to print the current state of the FSM.\n");
 	    }
 	}
       
