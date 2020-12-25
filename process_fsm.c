@@ -88,7 +88,15 @@ void processFsm(char input_file[], int num_states, int fsm_states[], int fsm[50]
 	      
 	      // Calculate the next state for the given current state and input.
 	      next_state = fsm[row_num][col_num];
+	      if (next_state == -1)
+		{
+		  printf("Error: Transition is not defined for input %c with current state %d.\n", input, cur_state);
+		  break;
+		}
+	      else
+		{
 	      printf("\tat step %d, input %c transitions FSM from state %d to state %d\n", num_inputs, input, cur_state, next_state);
+		}
 	      
 	      // Increment state and number of inputs.
 	      cur_state = next_state;
