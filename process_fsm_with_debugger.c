@@ -29,17 +29,16 @@ void processFsmWithDebugger(char input_file[], int fsm_states[], int fsm[50][52]
     {
       printf("processing FSM inputs file %s\n", input_file);
       
+      scan_status = fscanf(infile, "%c\n", &input);
+      
       // Process at most 250 inputs.
       while (scan_status != EOF && num_inputs < LIMIT)
 	{
 	  printf("FSM debugger> ");
-	  scanf("%c\n", &debugger_input);
+	  scanf(" %c", &debugger_input);
 	  
 	  if (debugger_input == 'n')
-	    {
-	      
-	      scan_status = fscanf(infile, "%c\n", &input);
-	      
+	    {	      
 	      // Calculate the row number of the current state.
 	      row_num = -1;
 	      for (int i = 0; i < 50; i++) 
@@ -88,6 +87,7 @@ void processFsmWithDebugger(char input_file[], int fsm_states[], int fsm[50][52]
 	      // Increment state and number of inputs.
 	      cur_state = next_state;
 	      num_inputs++;
+	      scan_status = fscanf(infile, "%c\n", &input);
 	    }
 	  
 	  else if (debugger_input == 'p')
