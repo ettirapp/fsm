@@ -42,6 +42,7 @@ void processFsm(char input_file[], int num_states, int fsm_states[], int fsm[50]
 	      scanf(" %c", &debugger_input);
 	    }
 	  
+	  // Process the next input to the FSM
 	  if ((! debugging) || (debugger_input == 'n'))
 	    {	      
 	      // Calculate the row number of the current state.
@@ -95,12 +96,15 @@ void processFsm(char input_file[], int num_states, int fsm_states[], int fsm[50]
 	      scan_status = fscanf(infile, "%c\n", &input);
 	    }
 	  
+	  // Print the current state of the FSM.
 	  else if (debugger_input == 'p')
 	    {
 	      printf("The FSM is currently in state %d\n", cur_state);
+	      // ADD MISSING LINE HERE
 	      printFsm(num_states, fsm_states, fsm);
 	    }
 	  
+	  // Throw error for invalid input to debugger.
 	  else
 	    {
 	      printf("Error: Invalid input to debugger! Type n to process the next FSM input or p to print the current state of the FSM.\n");
