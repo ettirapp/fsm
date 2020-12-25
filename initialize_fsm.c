@@ -1,61 +1,123 @@
 #include <stdio.h>
-#define LIMIT 250
 
-int initializeFsm(char input_file[], int fsm_states[], int fsm[50][26]) 
+/******************************************************************************
+
+This function reads the FSM definition file and fills the fsm matrix.
+Rows in the fsm matrix correspond to states, columns correspond to inputs.
+fsm[row_for_current_state][column_for_current_input] = next_state.
+State names are mapped to row numbers in the fsm_states array.
+Row numbers are mapped to the characters a-z then A-Z in that order.
+On encountering an error, the code stops processing the input file and prints
+the number of transitions that were processed before reaching the error.
+
+*******************************************************************************/
+
+int initializeFsm(char input_file[], int fsm_states[], int fsm[50][52]) 
 {
-    FILE *infile;
-    infile = fopen(input_file, "r");
-    int i = 0;
-    int state_num_in_array = 0;
-    
-    int cur_state;
-    char input;
-    int next_state;
-    int row_num;
-    int col_num;
-    int success;
-    
-    if (infile != NULL) 
+  FILE *infile;
+  int scan_status;
+  int transitions = 0;
+  int fsm_states_index = 0;
+  int cur_state;
+  char input;
+  int next_state;
+  int row_num;
+  int col_num;
+  
+  // Open FSM definition file for reading.
+  infile = fopen(input_file, "r");
+  
+  if (infile != NULL) 
     {
-        printf("processing FSM definition file %s\n", input_file);
-        
-        success = fscanf(infile, "%d:%c>%d", &cur_state, &input, &next_state);
-        while (success != EOF && i < LIMIT)
+      printf("processing FSM definition file %s\n", input_file);
+      
+      scan_status = fscanf(infile, "%d:%c>%d", &cur_state, &input, &next_state);
+      
+      // Scan until the end of the file
+      while (scan_status != EOF)
         {
-            i++; // throw error if gets too big
-            
-            if (success != 3) 
+	  // If the input format is not current_state:input>next_state,
+	  // throw an error.
+	  if (scan_status != 3)
             {
-                printf("Error: formatting error in input file!\n");
+	      printf("Error: formatting error in input file!\n");
+	      break;
             }
-            
-            row_num = -1;
-            for (int i = 0; i < state_num_in_array; i++) 
+	  
+	  // Find the row number in the fsm matrix corresponding to the
+	  // current state. fsm_states is a reverse lookup: if
+	  // fsm_states[i] = j, then state name j corresponds to the i'th
+	  // row of the fsm matrix.
+	  row_num = -1;
+	  
+	  // First check if we've already seen this state name.
+	  for (int i = 0; i < fsm_states_index; i++) 
             {
-                if (fsm_states[i] == cur_state)  // cur_state is the i'th row in the 2d array
+	      if (fsm_states[i] == cur_state)
                 {
-                    row_num = i;
-                    break;
+		  row_num = i;
+		  break;
                 }
             }
-            if (row_num == -1) // not found
+	  
+	  // If we haven't seen this state yet, create a row number for it.
+	  if (row_num == -1)
             { 
-                fsm_states[state_num_in_array] = cur_state;
-                row_num = state_num_in_array;
-                state_num_in_array++;
+	      fsm_states[fsm_states_index] = cur_state;
+	      row_num = fsm_states_index;
+	      fsm_states_index++;
             }
-            
-            col_num = input - 97;
-            
-            // should check if already there?
-            fsm[row_num][col_num] = next_state;
-            
-            success = fscanf(infile, "%d:%c>%d", &cur_state, &input, &next_state);
+	  
+	  // Now that we have the current state's column number, calculate the
+	  // row number corresponding to the input. Rows 0-25 correspond to
+	  // characters a-z, 26-51 correspond to characters A-Z.
+	  if (input >= 'a' && input <= 'z')
+            {
+	      col_num = input - 97;
+            }
+	  else if (input >= 'A' && input <= 'Z') 
+            {
+	      col_num = input - 65 + 26;
+            }
+	  else
+            {
+	      printf("Error: Invalid input! Inputs must be alphabetic characters.\n");
+	      break;
+            }
+	  
+	  // If the next state for this current state and input has not been
+	  // recorded yet, add it to the matrix.
+	  if (fsm[row_num][col_num] == -1)
+            {
+	      fsm[row_num][col_num] = next_state;
+            }
+	  // If we have already recorded a next state for this current state
+	  // and input, and that next state is different from the one we have 
+	  // here (i.e. the fsm is non-deterministic), throw an error.
+	  else if (fsm[row_num][col_num] != next_state)
+            {
+	      printf("Error: The FSM described by this definition file is non-deterministic!\n");
+	      break;
+            }
+	  
+	  // Increment number of transitions processed, scan the next line.
+	  transitions++;
+	  scan_status = fscanf(infile, "%d:%c>%d", &cur_state, &input, &next_state);
         }
-        printf("FSM has %d transitions\n", i);
-        return state_num_in_array;
+      
+      // Print number of transitions processed (either the number of lines in
+      // the definition file, or the number of lines read before encountering 
+      // an error.)
+      printf("FSM has %d transitions\n", transitions);
+      
+      // Return the number of states in this FSM.
+      return fsm_states_index;
     }
-    else {
-        printf("Error: The FSM definition file could not be opened to read.\n");
+  
+  // If the FSM definition file could not be opened to read, return an error.
+  else 
+    {
+      printf("Error: The FSM definition file could not be opened to read.\n");
+      return -1;
     }
 }

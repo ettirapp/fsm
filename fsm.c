@@ -2,14 +2,29 @@
 #include "initialize_fsm.h"
 #include "process_fsm.h"
 
-// TODO: Look for all errors. Break on error. Test code. Add to git.  Run on ada.
-
 int main(int argc,char* argv[])
 {
-    int fsm_states[50];
-    int fsm[50][26];
-    
-    int num_states = initializeFsm(argv[1], fsm_states, fsm);
-    processFsm(argv[2], fsm_states, fsm);
-}
+  if (argc != 3)
+    {
+      printf("Error: Incorrect number of command line arguments!");
+    }
+  
+  int fsm_states[50];
+  int fsm[50][52];
+  
+  // Initialize fsm matrix to -1's so we will be able to see if an element
+  // has been set yet.
+  for (int i = 0; i < 50; i++)
+    {
+      for (int j = 0; j < 52; j++)
+	{
+          fsm[i][j] = -1;
+	}
+    }
+  
+  // Read fsm definition file, fill fsm matrix.
+  int num_states = initializeFsm(argv[1], fsm_states, fsm);
 
+  // Read input file, process transitions.
+  processFsm(argv[2], fsm_states, fsm);
+}
