@@ -6,6 +6,7 @@
 
 int main(int argc, char* argv[])
 {  
+  // Max 50 states and 52 unique inputs in the FSM
   int fsm_states[50];
   int fsm[50][52];
   
@@ -19,6 +20,7 @@ int main(int argc, char* argv[])
 	}
     }
   
+  // Running the FSM with the interactive debugger
   if (strcmp(argv[1], "-d") == 0)
     {
       if (argc != 4)
@@ -33,6 +35,7 @@ int main(int argc, char* argv[])
       processFsm(argv[3], num_states, fsm_states, fsm, true);
     }
   
+  // Running the FSM without the interactive debugger
   else
     {
       if (argc != 3)
