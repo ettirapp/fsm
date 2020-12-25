@@ -62,15 +62,23 @@ int initializeFsm(char input_file[], int fsm_states[], int fsm[50][52])
 	  
 	  // If we haven't seen this state yet, create a row number for it.
 	  if (row_num == -1)
-            { 
-	      fsm_states[fsm_states_index] = cur_state;
-	      row_num = fsm_states_index;
-	      fsm_states_index++;
+            {
+	      if (fsm_states_index < 50)
+		{
+		  fsm_states[fsm_states_index] = cur_state;
+		  row_num = fsm_states_index;
+		  fsm_states_index++;
+		}
+	      else
+		{
+		  printf("Error: Too many states in the FSM!");
+		}
             }
 	  
 	  // Now that we have the current state's column number, calculate the
 	  // row number corresponding to the input. Rows 0-25 correspond to
 	  // characters a-z, 26-51 correspond to characters A-Z.
+	  // EXTRA CREDIT: My code also works with uppercase inputs.
 	  if (input >= 'a' && input <= 'z')
             {
 	      col_num = input - 97;
