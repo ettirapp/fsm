@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include "print_fsm.h"
+#include "calculate_row.h"
+#include "calculate_column.h"
 #define LIMIT 250
 
 /******************************************************************************
@@ -11,7 +13,7 @@ simulation it is performing. The function processes at most 250 inputs.
 
 *******************************************************************************/
 
-void processFsm(char input_file[], int num_states, int num_transitions, int fsm_states[], int fsm[50][52], bool debugging)
+void processInputs(char input_file[], int num_states, int num_transitions, int fsm_states[], int fsm[50][52], bool debugging)
 {
   FILE *infile;
   char input;
@@ -44,45 +46,18 @@ void processFsm(char input_file[], int num_states, int num_transitions, int fsm_
 	  
 	  // Process the next input to the FSM
 	  if ((! debugging) || (debugger_input == 'n'))
-	    {	      
+	    {
 	      // Calculate the row number of the current state.
-	      row_num = -1;
-	      for (int i = 0; i < 50; i++) 
+	      row_num = calculateRow(fsm_states, cur_state);
+	      if (row_num == -1)
 		{
-		  if (fsm_states[i] == cur_state)
-		    {
-		      row_num = i;
-		      break;
-		    }
-		}
-	      
-	      // If the current state does not exist, throw an error.
-	      if (row_num == -1) 
-		{
-		  if (cur_state == 0)
-		    {
-		      printf("Error: FSM must contain a state 0!");
-		    }
-		  else 
-		    {
-		      printf("Error: State %d does not exist in the FSM!\n", cur_state);
-		    }
 		  break;
 		}
 	      
 	      // Calculate the column number of the current input.
-	      // EXTRA CREDIT: My code also works with uppercase inputs.
-	      if (input >= 'a' && input <= 'z')
+	      col_num = calculateColumn(input);
+	      if (col_num == -1)
 		{
-		  col_num = input - 97;
-		}
-	      else if (input >= 'A' && input <= 'Z') 
-		{
-		  col_num = input - 65 + 26;
-		}
-	      else
-		{
-		  printf("Error: Invalid input! Inputs must be alphabetic characters.\n");
 		  break;
 		}
 	      
