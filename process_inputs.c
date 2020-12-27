@@ -17,8 +17,7 @@ void processInputs(char input_file[], int num_states, int num_transitions, int f
   FILE *infile;
   char input;
   int num_inputs = 0;
-  // initial state defaults to state 0
-  int cur_state = 0;
+  int cur_state = 0;	// initial state defaults to state 0
   int next_state;
   char debugger_input;
   int scan_status = 0;
