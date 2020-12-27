@@ -118,7 +118,7 @@ void initializeFsm(char input_file[], int* num_states, int* num_transitions, int
       // an error.)
       printf("FSM has %d transitions\n", transitions);
       
-      // Return the number of states in this FSM.
+      // Return the number of states and transitions in this FSM.
       *num_states = fsm_states_index;
       *num_transitions = transitions;
     }
