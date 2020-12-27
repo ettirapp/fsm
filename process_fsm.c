@@ -11,7 +11,7 @@ simulation it is performing. The function processes at most 250 inputs.
 
 *******************************************************************************/
 
-void processFsm(char input_file[], int num_states, int fsm_states[], int fsm[50][52], bool debugging)
+void processFsm(char input_file[], int num_states, int num_transitions, int fsm_states[], int fsm[50][52], bool debugging)
 {
   FILE *infile;
   char input;
@@ -108,8 +108,7 @@ void processFsm(char input_file[], int num_states, int fsm_states[], int fsm[50]
 	  else if (debugger_input == 'p')
 	    {
 	      printf("The FSM is currently in state %d\n", cur_state);
-	      // ADD MISSING LINE HERE
-	      printFsm(num_states, fsm_states, fsm);
+	      printFsm(num_states, num_transitions, fsm_states, fsm);
 	    }
 	  
 	  // Throw error for invalid input to debugger.

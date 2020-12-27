@@ -12,7 +12,7 @@ the number of transitions that were processed before reaching the error.
 
 *******************************************************************************/
 
-int initializeFsm(char input_file[], int fsm_states[], int fsm[50][52]) 
+void initializeFsm(char input_file[], int* num_states, int* num_transitions, int fsm_states[], int fsm[50][52]) 
 {
   FILE *infile;
   int scan_status;
@@ -119,13 +119,13 @@ int initializeFsm(char input_file[], int fsm_states[], int fsm[50][52])
       printf("FSM has %d transitions\n", transitions);
       
       // Return the number of states in this FSM.
-      return fsm_states_index;
+      *num_states = fsm_states_index;
+      *num_transitions = transitions;
     }
   
   // If the FSM definition file could not be opened to read, return an error.
   else 
     {
       printf("Error: The FSM definition file could not be opened to read.\n");
-      return -1;
     }
 }

@@ -2,11 +2,13 @@
 
 // This function prints all the transitions in an FSM.
 // It is used by the print function in the interactive debugger.
-void printFsm(int num_states, int fsm_states[], int fsm[50][52])
+void printFsm(int num_states, int num_transitions, int fsm_states[], int fsm[50][52])
 {
   int state_name;
   char input;
   int transition = 0;
+
+  printf("FSM has %d transitions\n", num_transitions);
   
   // Iterate through the fsm matrix
   for (int row = 0; row < num_states; row++)
@@ -31,5 +33,10 @@ void printFsm(int num_states, int fsm_states[], int fsm[50][52])
 	      transition++;
 	    }
 	}
+    }
+
+  if (transition != num_transitions)
+    {
+      printf("Something went very wrong here!\n");
     }
 }

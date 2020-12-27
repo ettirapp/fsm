@@ -9,6 +9,9 @@ int main(int argc, char* argv[])
   // Max 50 states and 52 unique inputs in the FSM
   int fsm_states[50];
   int fsm[50][52];
+
+  int num_states;
+  int num_transitions;
   
   // Initialize fsm matrix to -1's so we will be able to see if an element
   // has been set yet.
@@ -29,10 +32,10 @@ int main(int argc, char* argv[])
 	}
       
       // Read fsm definition file, fill fsm matrix.
-      int num_states = initializeFsm(argv[2], fsm_states, fsm);
+      initializeFsm(argv[2],  &num_states, &num_transitions, fsm_states, fsm);
 
       // Read input file, process transitions with debugger.
-      processFsm(argv[3], num_states, fsm_states, fsm, true);
+      processFsm(argv[3], num_states, num_transitions, fsm_states, fsm, true);
     }
   
   // Running the FSM without the interactive debugger
@@ -44,9 +47,9 @@ int main(int argc, char* argv[])
 	}
       
       // Read fsm definition file, fill fsm matrix.
-      int num_states = initializeFsm(argv[1], fsm_states, fsm);
+      initializeFsm(argv[1], &num_states, &num_transitions, fsm_states, fsm);
       
       // Read input file, process transitions.
-      processFsm(argv[2], num_states, fsm_states, fsm, false);
+      processFsm(argv[2], num_states, num_transitions, fsm_states, fsm, false);
     }
 }
