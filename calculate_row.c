@@ -4,6 +4,8 @@
 int calculateRow(int fsm_states[], int cur_state)
 {
   int row_num = -1;
+	
+  // Reverse lookup the state number in the fsm_states array.
   for (int i = 0; i < 50; i++) 
     {
       if (fsm_states[i] == cur_state)
