@@ -14,7 +14,7 @@ int calculateNextState(int cur_state, char input, int fsm_states[], int fsm[50][
   // Calculate the column number of the current input.
   col_num = calculateColumn(input);
 
-  // Catch errors
+  // Catch errors.
   if (row_num == -1 || col_num == -1)
     {
       return -1;
