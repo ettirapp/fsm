@@ -41,11 +41,17 @@ void processInputs(char input_file[], int num_states, int num_transitions, int f
 	      scanf(" %c", &debugger_input);
 	    }
 	  
-	  // Process the next input to the FSM
+	  // Process the next input to the FSM.
 	  if ((! debugging) || (debugger_input == 'n'))
 	    {
 	      // Calculate and print the next state of the FSM
 	      next_state = calculateNextState(cur_state, input, fsm_states, fsm);
+	      // If calculating next state returned an error, break.
+	      if (next_state == -1)
+		{
+		  break;
+		}
+	      
 	      printf("\tat step %d, input %c transitions FSM from state %d to state %d\n", num_inputs, input, cur_state, next_state);
 	      
 	      // Increment state and number of inputs.

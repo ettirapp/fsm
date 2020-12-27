@@ -10,14 +10,12 @@ int calculateNextState(int cur_state, char input, int fsm_states[], int fsm[50][
   
   // Calculate the row number of the current state.
   row_num = calculateRow(fsm_states, cur_state);
-  if (row_num == -1)
-    {
-      return -1;
-    }
   
   // Calculate the column number of the current input.
   col_num = calculateColumn(input);
-  if (col_num == -1)
+
+  // Catch errors
+  if (row_num == -1 || col_num == -1)
     {
       return -1;
     }
@@ -29,5 +27,6 @@ int calculateNextState(int cur_state, char input, int fsm_states[], int fsm[50][
       printf("Error: Transition is not defined for input %c with current state %d.\n", input, cur_state);
     }
 
+  // Return -1 upon error, else return next_state.
   return next_state;
 }
