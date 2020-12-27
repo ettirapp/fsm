@@ -1,0 +1,1 @@
+int calculateColumn(int input);
