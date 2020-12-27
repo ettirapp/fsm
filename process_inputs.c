@@ -2,8 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "print_fsm.h"
-#include "calculate_row.h"
-#include "calculate_column.h"
+#include "calculate_next_state.h"
 #define LIMIT 250
 
 /******************************************************************************
@@ -21,8 +20,6 @@ void processInputs(char input_file[], int num_states, int num_transitions, int f
   // initial state defaults to state 0
   int cur_state = 0;
   int next_state;
-  int row_num;
-  int col_num;
   char debugger_input;
   int scan_status = 0;
   
@@ -47,31 +44,9 @@ void processInputs(char input_file[], int num_states, int num_transitions, int f
 	  // Process the next input to the FSM
 	  if ((! debugging) || (debugger_input == 'n'))
 	    {
-	      // Calculate the row number of the current state.
-	      row_num = calculateRow(fsm_states, cur_state);
-	      if (row_num == -1)
-		{
-		  break;
-		}
-	      
-	      // Calculate the column number of the current input.
-	      col_num = calculateColumn(input);
-	      if (col_num == -1)
-		{
-		  break;
-		}
-	      
-	      // Calculate the next state for the given current state and input.
-	      next_state = fsm[row_num][col_num];
-	      if (next_state == -1)
-		{
-		  printf("Error: Transition is not defined for input %c with current state %d.\n", input, cur_state);
-		  break;
-		}
-	      else
-		{
+	      // Calculate and print the next state of the FSM
+	      next_state = calculateNextState(cur_state, input, fsm_states, fsm);
 	      printf("\tat step %d, input %c transitions FSM from state %d to state %d\n", num_inputs, input, cur_state, next_state);
-		}
 	      
 	      // Increment state and number of inputs.
 	      cur_state = next_state;
