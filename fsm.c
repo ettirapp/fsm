@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "initialize_fsm.h"
-#include "process_fsm.h"
+#include "process_inputs.h"
 
 int main(int argc, char* argv[])
 {  
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
       initializeFsm(argv[2],  &num_states, &num_transitions, fsm_states, fsm);
 
       // Read input file, process transitions with debugger.
-      processFsm(argv[3], num_states, num_transitions, fsm_states, fsm, true);
+      processInputs(argv[3], num_states, num_transitions, fsm_states, fsm, true);
     }
   
   // Running the FSM without the interactive debugger
@@ -50,6 +50,6 @@ int main(int argc, char* argv[])
       initializeFsm(argv[1], &num_states, &num_transitions, fsm_states, fsm);
       
       // Read input file, process transitions.
-      processFsm(argv[2], num_states, num_transitions, fsm_states, fsm, false);
+      processInputs(argv[2], num_states, num_transitions, fsm_states, fsm, false);
     }
 }

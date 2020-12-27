@@ -13,7 +13,7 @@ simulation it is performing. The function processes at most 250 inputs.
 
 *******************************************************************************/
 
-void processFsm(char input_file[], int num_states, int num_transitions, int fsm_states[], int fsm[50][52], bool debugging)
+void processInputs(char input_file[], int num_states, int num_transitions, int fsm_states[], int fsm[50][52], bool debugging)
 {
   FILE *infile;
   char input;
