@@ -43,6 +43,13 @@ void initializeFsm(char input_file[], int* num_states, int* num_transitions, int
 	      printf("Error: formatting error in input file!\n");
 	      break;
             }
+
+	  // Check for invalid state names
+	  if (cur_state < 0 || next_state < 0)
+	    {
+	      printf("Error: State names must be positive numbers.\n");
+	      break;
+	    }
 	  
 	  // Find the row number in the fsm matrix corresponding to the
 	  // current state. fsm_states has a reverse lookup scheme: if
