@@ -9,19 +9,8 @@ int main(int argc, char* argv[])
   // Max 50 states and 52 unique inputs in the FSM
   int fsm_states[50];
   int fsm[50][52];
-
   int num_states;
   int num_transitions;
-  
-  // Initialize fsm matrix to -1's so we will be able to see if an element
-  // has been set yet.
-  for (int i = 0; i < 50; i++)
-    {
-      for (int j = 0; j < 52; j++)
-	{
-          fsm[i][j] = -1;
-	}
-    }
   
   // Running the FSM with the interactive debugger
   if (strcmp(argv[1], "-d") == 0)

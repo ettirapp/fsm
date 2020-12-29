@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "initialize_matrix.h"
 
 /******************************************************************************
 
@@ -30,6 +31,9 @@ void initializeFsm(char input_file[], int* num_states, int* num_transitions, int
   if (infile != NULL) 
     {
       printf("processing FSM definition file %s\n", input_file);
+
+      // Fill fsm matrix with -1
+      initializeMatrix(fsm);
       
       scan_status = fscanf(infile, "%d:%c>%d", &cur_state, &input, &next_state);
       
